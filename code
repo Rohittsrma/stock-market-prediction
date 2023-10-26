@@ -1,0 +1,89 @@
+import pandas as pd
+import yfinance as yf
+import matplotlib.pyplot as plt
+import seaborn as sns
+import datetime
+from datetime import date, timedelta
+print("This is the data for  Facebook")
+today = date.today()
+
+d1 = today.strftime("%Y-%m-%d")
+end_date = d1
+d2 = date.today() - timedelta(days=360)
+d2 = d2.strftime("%Y-%m-%d")
+start_date = d2
+
+data1 = yf.download('FB', 
+                      start=start_date, 
+                      end=end_date, 
+                      progress=False)
+print(data1.head())
+print("\nstock detail for apple")
+data2 = yf.download('AAPL', 
+                      start=start_date, 
+                      end=end_date, 
+                      progress=False)
+
+print(data2.head())
+print("\n tesla stocks");
+data3 = yf.download('TSLA', 
+                      start=start_date, 
+                      end=end_date, 
+                      progress=False)
+
+print(data3.head())
+
+
+
+data1["Date"] = data1.index
+data1 = data1[["Date", "Open", "High", 
+             "Low", "Close", "Adj Close", "Volume"]]
+data1.reset_index(drop=True, inplace=True)
+print(data1.head())
+
+data2["Date"] = data2.index
+data2 = data2[["Date", "Open", "High", 
+             "Low", "Close", "Adj Close", "Volume"]]
+data2.reset_index(drop=True, inplace=True)
+print(data2.head())
+
+data3["Date"] = data3.index
+data3 = data3[["Date", "Open", "High", 
+             "Low", "Close", "Adj Close", "Volume"]]
+data3.reset_index(drop=True, inplace=True)
+print(data3.head())
+def get_closing_prices(symbol, period="1mo"):  # default value of 1 day.
+    try:
+        ticker = yf.Ticker(symbol)
+        data = ticker.history(period)
+        return data["Close"]
+    except Exception as e:
+        print("Failed to get required data.", e)
+ticker = "AAPL"  # Apple
+period = "1y"
+prices_data = get_closing_prices(ticker, period)
+
+sns.lineplot(data=prices_data)
+sns.set_theme()  # Default seaborn style
+plt.xticks(rotation=40)
+plt.title(f"Closing Stock Prices for {ticker}")
+plt.show()
+ticker = "TSLA"  # tesla
+period = "20y"
+prices_data = get_closing_prices(ticker, period)
+
+sns.lineplot(data=prices_data)
+sns.set_theme()  # Default seaborn style
+plt.xticks(rotation=40)
+plt.title(f"Closing Stock Prices for {ticker}")
+plt.show()
+today = date.today()
+
+d1 = today.strftime("%Y-%m-%d")
+end_date = d1
+a=input("enter company");
+data1 = yf.download('a', 
+                      start=start_date, 
+                      end=end_date, 
+                      progress=False)
+print(data1.head())
