@@ -1,89 +1,101 @@
+#Import libraries
+
+import os
+
+import numpy as np
+
 import pandas as pd
-import yfinance as yf
+
 import matplotlib.pyplot as plt
-import seaborn as sns
-import datetime
-from datetime import date, timedelta
-print("This is the data for  Facebook")
-today = date.today()
+%matplotlib inline
+dataset_train = pd.read_csv("Google_Stock_Price_Train.csv")
+dataset_train.head()
+training_set = dataset_train.iloc[:,1:2].values
 
-d1 = today.strftime("%Y-%m-%d")
-end_date = d1
-d2 = date.today() - timedelta(days=360)
-d2 = d2.strftime("%Y-%m-%d")
-start_date = d2
+print(training_set)
+print(training_set.shape)
+from sklearn.preprocessing import MinMaxScaler
 
-data1 = yf.download('FB', 
-                      start=start_date, 
-                      end=end_date, 
-                      progress=False)
-print(data1.head())
-print("\nstock detail for apple")
-data2 = yf.download('AAPL', 
-                      start=start_date, 
-                      end=end_date, 
-                      progress=False)
+scaler = MinMaxScaler(feature_range = (0,1))
+scaled_training_set = scaler.fit_transform(training_set)
 
-print(data2.head())
-print("\n tesla stocks");
-data3 = yf.download('TSLA', 
-                      start=start_date, 
-                      end=end_date, 
-                      progress=False)
+scaled_training_set
+oa
+co
 
-print(data3.head())
+Xitrain — p)
+
+y_train = []
+
+for i in range(6@,1258):
+X_train.append(scaled_training_set[i-60:i, 2])
+y_train.append(scaled_training_set[i, @])
+
+X_train = np.array(X_train)
+
+y_train = np.array(y_train)
+print(X_train.shape)
+print(y_train.shape)
+X_train = np.reshape(X_train, (X_train.shape[@], X_train.shape[1], 1))
+
+X_train.shape
+from keras.models import Sequential
+from keras. layers import LSTM
+from keras. layers import Dense
+from keras. layers import Dropout
+regressor = Sequential()
+
+regressor.add(LSTM(units = 50, return_sequences= True, input_shape = (X_train.shape[1], 1)))
+regressor.add(Dropout(@.2))
+
+regressor.add(LSTM(units = 5@, return_sequences= True))
+regressor.add(Dropout (@.2))
+
+regressor.add(LSTM(units = 5@, return_sequences= True))
+regressor.add(Dropout(@.2))
+
+regressor.add(LSTM(units = 50))
+regressor.add(Dropout(@.2))
+
+regressor.add(Dense(units=1))
+regressor.compile(optimizer = ‘adam', loss = 'mean_squared_error')
+regressor.fit(X_train, y_train, epochs=100, batch_size=32)
+dataset_test = pd.read_csv("Google_Stock_Price_Test.csv")
+actual_stock_price = dataset_test.iloc[:,1:2].values
+dataset_total = pd.concat((dataset_train['Open'], dataset_test[‘Open']), axis =
+inputs = dataset_total[len(dataset_total)- len(dataset_test)-60:].values
+
+inputs = inputs.reshape(-1,1)
+inputs = scaler.transform(inputs)
+
+X_test = []
+for i in range(60,8@):
+X_test.append(inputs[i-60:i, @])
+X_test = np.array(X_test)
+X_test = np.reshape(X_test,(X_test.shape[@], X_test.shape[1], 1))
+
+predicted_stock_price
+predicted_stock_price
+
+regressor.predict(X_test)
+scaler. inverse_transform(predicted_stock_price)
+plt.plot(actual_stock_price, color = ‘red’, label = ‘Actual Google Stock Price’)
+plt.plot(predicted_stock_price, color = ‘blue’, label = ‘Predicted Google Stock Price’)
+plt.title(‘Google Stock Price Prediction’)
+
+plt.xlabel (‘Time’)
+
+plt.ylabel('Google Stock Price’)
+
+plt.legend()
 
 
 
-data1["Date"] = data1.index
-data1 = data1[["Date", "Open", "High", 
-             "Low", "Close", "Adj Close", "Volume"]]
-data1.reset_index(drop=True, inplace=True)
-print(data1.head())
 
-data2["Date"] = data2.index
-data2 = data2[["Date", "Open", "High", 
-             "Low", "Close", "Adj Close", "Volume"]]
-data2.reset_index(drop=True, inplace=True)
-print(data2.head())
 
-data3["Date"] = data3.index
-data3 = data3[["Date", "Open", "High", 
-             "Low", "Close", "Adj Close", "Volume"]]
-data3.reset_index(drop=True, inplace=True)
-print(data3.head())
-def get_closing_prices(symbol, period="1mo"):  # default value of 1 day.
-    try:
-        ticker = yf.Ticker(symbol)
-        data = ticker.history(period)
-        return data["Close"]
-    except Exception as e:
-        print("Failed to get required data.", e)
-ticker = "AAPL"  # Apple
-period = "1y"
-prices_data = get_closing_prices(ticker, period)
 
-sns.lineplot(data=prices_data)
-sns.set_theme()  # Default seaborn style
-plt.xticks(rotation=40)
-plt.title(f"Closing Stock Prices for {ticker}")
-plt.show()
-ticker = "TSLA"  # tesla
-period = "20y"
-prices_data = get_closing_prices(ticker, period)
 
-sns.lineplot(data=prices_data)
-sns.set_theme()  # Default seaborn style
-plt.xticks(rotation=40)
-plt.title(f"Closing Stock Prices for {ticker}")
-plt.show()
-today = date.today()
 
-d1 = today.strftime("%Y-%m-%d")
-end_date = d1
-a=input("enter company");
-data1 = yf.download('a', 
-                      start=start_date, 
-                      end=end_date, 
-                      progress=False)
-print(data1.head())
+
+
+
