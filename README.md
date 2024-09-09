@@ -30,28 +30,29 @@ Scaling: The code uses MinMaxScaler from scikit-learn to scale the data between 
 
 # Model Building (LSTM)
 
-##Data Preparation:
+## Data Preparation:
 The code creates sequences of past 60 days' opening prices for training.
 
 It separates these sequences as features (X_train) and the next day's opening price as target variable (y_train).
-##Model Definition: A sequential LSTM model is built using Keras:
+## Model Definition: 
+A sequential LSTM model is built using Keras:
 
 Three LSTM layers with 50 units each are used with dropout regularization to prevent overfitting.
 
 A final Dense layer with one unit predicts the next day's opening price.
-##Model Compilation: 
+## Model Compilation: 
 The model is compiled with the Adam optimizer and mean squared error (MSE) loss function.
-##Model Training: 
+## Model Training: 
 The model is trained on the prepared training data (X_train, y_train) for 100 epochs with a batch size of 32.
 # Prediction
-##Test Data Preparation: 
+## Test Data Preparation: 
 Similar to training data, sequences of the last 60 days' opening prices are created from the test dataset.
-##Prediction Generation: 
+## Prediction Generation: 
 The trained model predicts the next day's opening price for each sequence in the test data.
-##Inverse Scaling: 
+## Inverse Scaling: 
 The predicted values are inverse-transformed back to the original scale using the MinMaxScaler.
-#Evaluation
-##Plotting: 
+# Evaluation
+## Plotting: 
 The code plots both actual and predicted stock prices for the test data to visually compare the model's performance.
 
 # Additional Notes
