@@ -14,10 +14,10 @@ Keras: Deep learning library built on top of TensorFlow.
 # Data
 The project utilizes two CSV files:
 
-** Google_Stock_Price_Train.csv: 
+** Google_Stock_Price_Train.csv: **
 Contains historical Google stock price data used for training the model.
 
-** Google_Stock_Price_Test.csv: 
+** Google_Stock_Price_Test.csv: **
 Contains data for which we want to predict future stock prices.
 
 # Preprocessing
